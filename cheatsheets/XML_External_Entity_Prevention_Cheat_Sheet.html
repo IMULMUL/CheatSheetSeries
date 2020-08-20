@@ -15,15 +15,15 @@
       
       
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.7">
     
     
       
-        <title>XML External Entity Prevention</title>
+        <title>XML External Entity Prevention - OWASP Cheat Sheet Series</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.b8ac9624.min.css">
       
       
     
@@ -40,7 +40,7 @@
     
       
         
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -332,6 +332,18 @@
   <li class="md-nav__item">
     <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
       Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" title="C-Based Toolchain Hardening" class="md-nav__link">
+      C-Based Toolchain Hardening
     </a>
   </li>
 
@@ -1100,6 +1112,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#oracle-dom-parser" class="md-nav__link">
+    Oracle DOM Parser
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#transformerfactory" class="md-nav__link">
     TransformerFactory
   </a>
@@ -1478,6 +1497,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#oracle-dom-parser" class="md-nav__link">
+    Oracle DOM Parser
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#transformerfactory" class="md-nav__link">
     TransformerFactory
   </a>
@@ -1844,12 +1870,14 @@
     <span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
     <span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
     <span class="c1">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
+    <span class="c1">//This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure</span>
     <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">;</span>
     <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
     <span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
     <span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
     <span class="c1">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
+    <span class="c1">//This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure</span>
     <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">;</span>
     <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
@@ -1909,6 +1937,22 @@
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLInputFactory</span><span class="p">.</span><span class="na">SUPPORT_DTD</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="c1">// disable external entities</span>
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="oracle-dom-parser">Oracle DOM Parser<a class="headerlink" href="#oracle-dom-parser" title="Permanent link">&para;</a></h3>
+<p>Follow <a href="" title="https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB">Oracle reomendation</a> e.g.:</p>
+<div class="codehilite"><pre><span></span><code>    <span class="c1">// Extend oracle.xml.parser.v2.XMLParser</span>
+    <span class="n">DOMParser</span> <span class="n">domParser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DOMParser</span><span class="p">();</span>
+
+    <span class="c1">// Do not expand entity references</span>
+    <span class="n">domParser</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">DOMParser</span><span class="p">.</span><span class="na">EXPAND_ENTITYREF</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+    <span class="c1">// dtdObj is an instance of oracle.xml.parser.v2.DTD</span>
+    <span class="n">domParser</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">DOMParser</span><span class="p">.</span><span class="na">DTD_OBJECT</span><span class="p">,</span> <span class="n">dtdObj</span><span class="p">);</span>
+
+    <span class="c1">// Do not allow more than 11 levels of entity expansion</span>
+    <span class="n">domParser</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">DOMParser</span><span class="p">.</span><span class="na">ENTITY_EXPANSION_DEPTH</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
 </code></pre></div>
 
 
@@ -2378,15 +2422,15 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

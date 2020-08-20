@@ -15,15 +15,15 @@
       
       
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.7">
     
     
       
-        <title>Session Management</title>
+        <title>Session Management - OWASP Cheat Sheet Series</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.b8ac9624.min.css">
       
       
     
@@ -40,7 +40,7 @@
     
       
         
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -332,6 +332,18 @@
   <li class="md-nav__item">
     <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
       Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" title="C-Based Toolchain Hardening" class="md-nav__link">
+      C-Based Toolchain Hardening
     </a>
   </li>
 
@@ -2028,8 +2040,9 @@
 <li>It can provide a very good effective entropy, and as a result, can be considered long enough to avoid guessing or brute force attacks.</li>
 </ul>
 <h3 id="session-id-entropy">Session ID Entropy<a class="headerlink" href="#session-id-entropy" title="Permanent link">&para;</a></h3>
-<p>The session ID must be unpredictable (random enough) to prevent guessing attacks, where an attacker is able to guess or predict the ID of a valid session through statistical analysis techniques. For this purpose, a good <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> (Pseudo Random Number Generator) must be used.</p>
-<p>The session ID value must provide at least <code>64 bits</code> of entropy (if a good PRNG is used, this value is estimated to be half the length of the session ID).</p>
+<p>The session ID must be unpredictable (random enough) to prevent guessing attacks, where an attacker is able to guess or predict the ID of a valid session through statistical analysis techniques. For this purpose, a good <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator">CSPRNG</a> (Cryptographically Secure Pseudorandom Number Generator) must be used.</p>
+<p>The session ID value must provide at least <code>64 bits</code> of entropy (if a good <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> is used, this value is estimated to be half the length of the session ID).</p>
+<p>Additionally, a random session ID is not enough; it must also be unique to avoid duplicated IDs. A random session ID must not already exist in the current session ID space.</p>
 <p><strong>NOTE</strong>:</p>
 <ul>
 <li>The session ID entropy is really affected by other external and difficult to measure factors, such as the number of concurrent active sessions the web application commonly has, the absolute session expiration timeout, the amount of session ID guesses per second the attacker can make and the target web application can support, etc.</li>
@@ -2292,15 +2305,15 @@ Due to the potential to access Web Storage APIs via an XSS attack, session ident
       
     </div>
     
-      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
